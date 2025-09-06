@@ -35,12 +35,8 @@ if (window.location.hostname.includes('.s3-website-')
   detectedMode = envMode;
 }
 
-// Prioritize auto-detection, then URL parameter, then localStorage, then environment
-// const mode = urlParams.get('mode') || (detectedMode !== envMode ? detectedMode :
-// localStorage.getItem('spa-mode')) || envMode;
-const mode = urlParams.get('mode')
-    || (detectedMode !== envMode ? detectedMode : localStorage.getItem('spa-mode'))
-    || envMode;
+// Prioritize URL parameter, then environment mode, then localStorage, then auto-detection
+const mode = urlParams.get('mode') || envMode || localStorage.getItem('spa-mode') || detectedMode;
 // localStorage.setItem('spa-mode', mode);
 
 // Save mode to localStorage for persistence (only if not auto-detected)
