@@ -202,11 +202,11 @@ function getLocalAppUrls(isProduction) {
 
 function getGitHubAppUrls(githubUser) {
   return {
-    'single-spa-auth-app': `https://${githubUser}.github.io/single-spa-auth-app/single-spa-auth-app.js`,
-    'single-spa-layout-app': `https://${githubUser}.github.io/single-spa-layout-app/single-spa-layout-app.js`,
+    'single-spa-auth-app': `https://${githubUser}.github.io/single-spa-auth-app/single-spa-auth-app.umd.js`,
+    'single-spa-layout-app': `https://${githubUser}.github.io/single-spa-layout-app/single-spa-layout-app.umd.js`,
     'single-spa-home-app': `https://${githubUser}.github.io/single-spa-home-app/single-spa-home-app.js`,
     'single-spa-angular-app': `https://${githubUser}.github.io/single-spa-angular-app/single-spa-angular-app.js`,
-    'single-spa-vue-app': `https://${githubUser}.github.io/single-spa-vue-app/single-spa-vue-app.js`,
+    'single-spa-vue-app': `https://${githubUser}.github.io/single-spa-vue-app/single-spa-vue-app.umd.js`,
     'single-spa-react-app': `https://${githubUser}.github.io/single-spa-react-app/single-spa-react-app.js`,
     'single-spa-vanilla-app': `https://${githubUser}.github.io/single-spa-vanilla-app/single-spa-vanilla-app.js`,
     'single-spa-webcomponents-app': `https://${githubUser}.github.io/single-spa-webcomponents-app/single-spa-webcomponents-app.js`,
