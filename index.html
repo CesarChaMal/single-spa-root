@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Single Spa microfrontends example</title>
+
+    <!-- Set base href only for S3 production deployment -->
+    
+</head>
+
+<body>
+<!-- Load SystemJS first -->
+<script src="https://cdn.jsdelivr.net/npm/systemjs@6.14.1/dist/system.min.js"></script>
+
+<!-- Load single-spa -->
+<script src="https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js"></script>
+
+<!-- Configure SystemJS import map -->
+<script type="systemjs-importmap">
+{
+  "imports": {
+    "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js"
+  }
+}
+</script>
+
+<!-- Load Bootstrap CSS first -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-vue@2.2.2/dist/bootstrap-vue.css" rel="stylesheet">
+
+<!-- Load jQuery first for Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+<!-- Load Vue and dependencies globally for UMD libraries -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-router@3.1.4/dist/vue-router.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/single-spa-vue@1.7.0/lib/single-spa-vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-vue@2.2.2/dist/bootstrap-vue.min.js"></script>
+
+<!-- Set global configuration for different modes -->
+<script>
+    window.IMPORTMAP_URL = '<%= importmapUrl %>';
+    window.AWS_CONFIG = {
+        s3Bucket: '<%= s3Bucket %>',
+        region: '<%= awsRegion %>',
+        orgName: '<%= orgName %>'
+    };
+    window.GITHUB_USERNAME = '<%= githubUsername %>';
+    window.S3_WEBSITE_URL = '<%= s3WebsiteUrl %>';
+
+    // Debug information
+    console.log('🔧 HTML Template Configuration:');
+    console.log('  - Mode:', '<%= mode %>');
+    console.log('  - Production:', <%= isProduction %>);
+    console.log('  - Use S3 Paths:', <%= useS3Paths %>);
+    console.log('  - Public Path:', '<%= publicPath %>');
+    console.log('  - Import Map URL:', window.IMPORTMAP_URL);
+    console.log('  - S3 Website URL:', window.S3_WEBSITE_URL);
+</script>
+
+<!-- Load your root application -->
+<% if (useS3Paths) { %>
+<!-- AWS S3 build with code splitting -->
+<script src="/vendors.js"></script>
+<script src="/root-application.js"></script>
+<% } else { %>
+<!-- Regular build -->
+<script src="/root-application.js"></script>
+<% } %>
+
+
+<!-- Mount points for microfrontends -->
+<div id="auth-app"></div>
+<div id="layout-app"></div>
+<div id="home-app"></div>
+<div id="angular-app"></div>
+<div id="vue-app"></div>
+<div id="react-app"></div>
+<div id="vanilla-app"></div>
+<div id="webcomponents-app"></div>
+<div id="typescript-app"></div>
+<div id="jquery-app"></div>
+<div id="svelte-app"></div>
+
+<!-- Error handling for S3 deployments -->
+<script>
+    window.addEventListener('error', function(e) {
+        console.error('🚨 Script loading error:', e.filename, e.message);
+        if (e.filename && e.filename.includes('s3')) {
+            console.error('🚨 S3 resource loading failed. Check CORS settings and file permissions.');
+        }
+    });
+
+    window.addEventListener('unhandledrejection', function(e) {
+        console.error('🚨 Unhandled promise rejection:', e.reason);
+    });
+</script>
+</body>
+</html>
