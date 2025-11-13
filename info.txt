@@ -1,0 +1,15 @@
+(cd ../single-spa-auth-app && npm install --verbose)
+(cd ../single-spa-layout-app && npm install --verbose)
+(cd ../single-spa-home-app && npm install --verbose)
+(cd ../single-spa-angular-app && npm install --verbose)
+(cd ../single-spa-vue-app && npm install --verbose)
+(cd ../single-spa-react-app && npm install --verbose)
+(cd ../single-spa-vanilla-app && npm install --verbose)
+(cd ../single-spa-webcomponents-app && npm install --verbose)
+(cd ../single-spa-typescript-app && npm install --verbose)
+(cd ../single-spa-jquery-app && npm install --verbose)
+(cd ../single-spa-svelte-app && npm install --verbose)
+
+ npx eslint root-application-dynamic.js --fix
+
+ ws s3 sync single-spa-root/dist/ s3://single-spa-demo-774145483743/ --exclude "*.hot-update.*"
